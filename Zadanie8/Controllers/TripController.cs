@@ -7,9 +7,9 @@ namespace Zadanie8.Controllers;
 [Route("/api/trip")]
 public class TripController : ControllerBase
 {
-    private readonly TripService _tripService;
+    private readonly ITripService _tripService;
 
-    public TripController(TripService tripService)
+    public TripController(ITripService tripService)
     {
         _tripService = tripService;
     }
@@ -20,9 +20,10 @@ public class TripController : ControllerBase
         var trips = await _tripService.GetTripsAsync();
         return Ok(trips);
     }
+
     [HttpPost]
     [Route("{id}/clients")]
-    public async Task<IActionResult> AddClientToTripAsync([FromQuery] int id, [FromBody] ClientInDto clientDto)
+    public async Task<IActionResult> AddClientToTripAsync(int id, [FromBody] ClientInDto clientDto)
     {
         try
         {

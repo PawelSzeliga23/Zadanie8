@@ -26,9 +26,9 @@ public class ClientRepository : IClientRepository
             var trips = await _context.ClientTrips.Where(ct => ct.IdClient == id).ToListAsync();
             CheckIfClientHasTrips(trips);
 
-            _context.Clients.Remove(client);
+            _context.Clients.Remove(client!);
             await transaction.CommitAsync();
-            return client;
+            return client!;
         }
         catch (Exception e)
         {
@@ -37,7 +37,7 @@ public class ClientRepository : IClientRepository
         }
     }
 
-    private void CheckIfClientExists(Client client)
+    private void CheckIfClientExists(Client? client)
     {
         if (client == null)
         {

@@ -5,9 +5,9 @@ namespace Zadanie8.Services;
 
 public class ClientService : IClientService
 {
-    private readonly ClientRepository _clientRepository;
+    private readonly IClientRepository _clientRepository;
 
-    public ClientService(ClientRepository clientRepository)
+    public ClientService(IClientRepository clientRepository)
     {
         _clientRepository = clientRepository;
     }

@@ -7,9 +7,9 @@ namespace Zadanie8.Controllers;
 [Route("/api/client")]
 public class ClientController : ControllerBase
 {
-    private readonly ClientService _clientService;
+    private readonly IClientService _clientService;
 
-    public ClientController(ClientService clientService)
+    public ClientController(IClientService clientService)
     {
         _clientService = clientService;
     }
@@ -18,7 +18,7 @@ public class ClientController : ControllerBase
     [Route("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> DeleteClientAsync([FromQuery] int id)
+    public async Task<IActionResult> DeleteClientAsync(int id)
     {
         try
         {

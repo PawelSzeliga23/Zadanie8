@@ -19,8 +19,6 @@ public class TripRepository : ITripRepository
     public async Task<IEnumerable<TripDto>> GetTripsAsync()
     {
         var trips = await _context.Trips
-            .Include(t => t.IdCountries)
-            .ThenInclude(tc => tc.IdCountry)
             .Include(t => t.ClientTrips)
             .ThenInclude(ct => ct.IdClientNavigation)
             .Select(t => new TripDto
@@ -34,12 +32,12 @@ public class TripRepository : ITripRepository
                 {
                     FirstName = ct.IdClientNavigation.FirstName,
                     LastName = ct.IdClientNavigation.LastName
-                }),
+                }).ToList(),
                 Countries = _context.Countries.Where(c => t.IdCountries.Any(tc => tc.IdCountry == c.IdCountry))
                     .Select(c => new CountryDto
                     {
                         Name = c.Name
-                    })
+                    }).ToList()
             }).OrderByDescending(t => t.DateFrom).ToListAsync();
         return trips;
     }
@@ -75,7 +73,7 @@ public class TripRepository : ITripRepository
             var clientTrip =
                 _context.ClientTrips.FirstOrDefault(ct => ct.IdClient == newId && ct.IdTrip == id);
             CheckIfClientInTrip(clientTrip);
-            
+
             _context.ClientTrips.Add(new ClientTrip
             {
                 IdClient = newId,
@@ -86,7 +84,7 @@ public class TripRepository : ITripRepository
 
             await _context.SaveChangesAsync();
             await transaction.CommitAsync();
-            return trip;
+            return trip!;
         }
         catch (Exception e)
         {

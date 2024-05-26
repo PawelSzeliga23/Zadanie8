@@ -13,6 +13,6 @@ public class TripDto
     public DateTime? DateTo { get; set; }
 
     public int MaxPeople { get; set; }
-    public IEnumerable<ClientDto> Clients { get; set; }
-    public IEnumerable<CountryDto> Countries { get; set; }
+    public IEnumerable<ClientDto> Clients { get; set; } = null!;
+    public IEnumerable<CountryDto> Countries { get; set; } = null!;
 }

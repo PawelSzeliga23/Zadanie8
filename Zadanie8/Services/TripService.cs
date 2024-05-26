@@ -7,9 +7,9 @@ namespace Zadanie8.Services;
 
 public class TripService : ITripService
 {
-    private readonly TripRepository _tripRepository;
+    private readonly ITripRepository _tripRepository;
 
-    public TripService(TripRepository tripRepository)
+    public TripService(ITripRepository tripRepository)
     {
         _tripRepository = tripRepository;
     }
@@ -21,7 +21,7 @@ public class TripService : ITripService
 
     public async Task<Trip> AddClientToTripAsync(int id, ClientInDto clientDto)
     {
-        throw new NotImplementedException();
+        return await _tripRepository.AddClientToTripAsync(id, clientDto);
     }
 }
 
